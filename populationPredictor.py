@@ -5,7 +5,8 @@ import pandas as pd
 from tabulate import tabulate
 from datetime import date
 
-def getTable(table,header):
+def getTable(table):
+    header = ["Year", "Population"]
     print(tabulate(table,header))
     
 def getPopulation(currentYear):
@@ -43,6 +44,6 @@ if __name__ == "__main__":
         intervalColumn.append(currentYear)
         currentYear += int(yearInterval)
         
-    header = ["Year", "Population"]
+    
     print(intervalColumn)
-    getTable(intervalColumn,header)
+    getTable(intervalColumn)
