@@ -1,12 +1,24 @@
 import math
+from msilib.schema import tables
 import numpy as np
 import pandas as pd
 from tabulate import tabulate
+from datetime import date
 
-def makeTable():
-    print(tabulate())
+def getTable(table,header):
+    print(tabulate(table,header))
+    
+def getPopulation(currentYear):
+    time = int(year) - 2021
+    predictedPop = countryPop * math.exp(countryGrowth*time)
+    
     
 if __name__ == "__main__":
+    isYear = False
+    currentDate = date.today()
+    currentYear = currentDate.year
+    print(currentYear)
+    intervalColumn = []
     country_df = pd.read_csv('csvData.csv')
     country = input("Please select a country: ")
     df = country_df[country_df['name'].str.contains(country)]
@@ -16,8 +28,21 @@ if __name__ == "__main__":
     print('The population of %s is %.0f' %(country,countryPop))
     print('The growth rate of %s is %.4f' %(country,countryGrowth))
 
-    year = input("Of which year do you want to find the predicted population of %s? " %(country))
-    time = int(year) - 2021
-    predictedPop = countryPop * math.exp(countryGrowth*time)
+    while(isYear == False):
+        year = input("Select a year after the year 2022: ")
+        if(int(year) <= 2022):
+            isYear = False
+            year = input("Invalid year. Please select a year after 2022: ")
+        else:
+            isYear = True
+    
     yearInterval = input("Please choose the year interval for predicting the population: ")
-    print('The predicted population of %s is expected to be %.0f' %(country,predictedPop))
+    
+    
+    while (currentYear <= int(year)):
+        intervalColumn.append(currentYear)
+        currentYear += int(yearInterval)
+        
+    header = ["Year", "Population"]
+    print(intervalColumn)
+    getTable(intervalColumn,header)
